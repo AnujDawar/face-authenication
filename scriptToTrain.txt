@@ -1,0 +1,5 @@
+python src/align/align_dataset_mtcnn.py --image_size 160 --margin 44 data\input_images_to_align data\input_images_aligned
+
+python src\classifier.py TRAIN data\input_data_dir src\models\20180402-114759 classifier.pk
+
+python src\main.py

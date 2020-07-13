@@ -26,15 +26,18 @@ class Classify():
     def __del__(self):
         self.sess.close()
 
-    def predict(self, path):
+    def predict(self, path, threshold = 0.8):
         image = self.load_image(path)
         self.feed_dict = { self.images_placeholder:image, self.phase_train_placeholder:False }
         self.emb_array[0,:] = self.sess.run(self.embeddings, feed_dict=self.feed_dict)
         predictions = self.model.predict_proba(self.emb_array)
+
+        print("predictions: ", predictions)
+
         best_class_indices = np.argmax(predictions, axis=1)
         best_class_probabilities = predictions[np.arange(len(best_class_indices)), best_class_indices]
         
-        if best_class_probabilities[0] < 0.8:
+        if best_class_probabilities[0] < threshold:
             return "Unknown face"
         else:
             return (self.class_names[best_class_indices[0]])

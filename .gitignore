@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+src/model/
+src/prediction_output_images
+
 # C extensions
 *.so
 

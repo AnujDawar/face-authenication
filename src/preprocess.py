@@ -3,7 +3,6 @@ import tensorflow as tf
 import numpy as np
 import detect_face
 
-
 class PreProcessor():
     def __init__(self):
         with tf.Graph().as_default():
@@ -13,7 +12,8 @@ class PreProcessor():
                 self.pnet, self.rnet, self.onet = detect_face.create_mtcnn(self.sess, None)
 
             self.minsize = 20 # minimum size of face
-            self.threshold = [ 0.6, 0.7, 0.7 ]  # three steps's threshold
+            # self.threshold = [ 0.6, 0.7, 0.7 ]  # three steps's threshold
+            self.threshold = [ 0.7, 0.8, 0.8 ]  # three steps's threshold
             self.factor = 0.709 # scale factor
 
     def align(self,image_path, margin=44, image_size=160):
@@ -42,5 +42,5 @@ class PreProcessor():
         bb[3] = np.minimum(det[3]+margin/2, img_size[0])
         cropped = img[bb[1]:bb[3],bb[0]:bb[2],:]
         scaled = misc.imresize(cropped, (image_size, image_size), interp='bilinear')
-        misc.imsave("temp.png", scaled)
+        misc.imsave("prediction_output_images/temp.png", scaled)
         return bb
